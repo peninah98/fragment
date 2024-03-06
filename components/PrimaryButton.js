@@ -1,9 +1,10 @@
 
 import { Text, View, StyleSheet } from "react-native";
-import StartGameSCreen from "./screens/StartGameScreens";
-export default function App(){
+export default function App({children}){
 return(
-  <StartGameSCreen/>
+    <View>
+        <Text>{children}</Text>
+    </View>
 )
 }
 
