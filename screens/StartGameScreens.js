@@ -1,13 +1,40 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View , Alert} from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
+import { useState } from "react";
 
 export default function StartGameSCreen(){
-    return (
+    const [enteredNumber, setEnteredNumber]= useState('')
+    function numberInputHandler(enteredText){
+         setEnteredNumber(enteredText)
+         console.log(enteredText); 
+    }
+    function confirmInputHandler(){
+        const chooseNumber = parseInt(enteredNumber)
+        if (isNaN(chooseNumber) || chooseNumber <1 || chooseNumber >99 ) {
+            Alert.alert('Invalid Number',"Please enter a number between  1 and 100",[{text: 'Okay',style:'destructive',onPress:resetInputHandler}])
+            return;
+        } 
+        console.log("Valid Number");
+        
+    }
+    function resetInputHandler(){
+
+        setEnteredNumber('')
+    } 
+     return (
         <View style = {styles.inputContainer}>
-        <TextInput  style= {styles.numberInput} maxLength={2} keyboardType="number-pad" autoCapitalize="none" autoCorrect={false}/>
+        <TextInput  
+            style= {styles.numberInput} 
+            maxLength={2} 
+            keyboardType="number-pad" 
+            autoCapitalize="none" 
+            autoCorrect={false}
+            value={enteredNumber}
+            onChangeText={numberInputHandler}/>
         <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}><PrimaryButton>Reset</PrimaryButton></View>
-        <View style={styles.buttonContainer}><PrimaryButton>Confirm</PrimaryButton></View>
+        <View style={styles.buttonContainer}>
+        <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton></View>
+        <View onPress={resetInputHandler} style={styles.buttonContainer} ><PrimaryButton>Reset</PrimaryButton></View>
         </View>
         </View>
     )
@@ -46,7 +73,7 @@ const styles  = StyleSheet.create({
         color:'#ddb52f',
         marginVertical:8,
         fontWeight:'bold',
-        align:'center'
+        alignItems:'center'
 
     },
     buttonsContainer:{
