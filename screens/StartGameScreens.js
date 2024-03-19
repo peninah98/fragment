@@ -2,6 +2,8 @@ import { StyleSheet, TextInput, View , Alert} from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import { useState } from "react";
 import Colors from "../util/colors";
+import Title from "../components/Title";
+import Card from "../util/Card";
 
 export default function StartGameSCreen({onPickedNumber}){
     const [enteredNumber, setEnteredNumber]= useState('')
@@ -22,47 +24,36 @@ export default function StartGameSCreen({onPickedNumber}){
         setEnteredNumber('')
     } 
      return (
-        <View style = {styles.inputContainer}>
-        <TextInput  
-            style= {styles.numberInput} 
-            maxLength={2} 
-            keyboardType="number-pad" 
-            autoCapitalize="none" 
-            autoCorrect={false}
-            value={enteredNumber}
-            onChangeText={numberInputHandler}/>
-        <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-        <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton></View>
-        <View onPress={resetInputHandler} style={styles.buttonContainer} ><PrimaryButton>Reset</PrimaryButton></View>
-        </View>
+        <View style = {styles.rootContainer}>
+        <Title/>
+            <Card>
+            <Text style = {styles.instructions}>Enter a number</Text>
+            <TextInput
+                style= {styles.numberInput}
+                maxLength={2}
+                keyboardType="number-pad"
+                autoCapitalize="none"
+                autoCorrect={false}
+                value={enteredNumber}
+                onChangeText={numberInputHandler}/>
+            <View style={styles.buttonsContainer}>
+            <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton></View>
+            <View onPress={resetInputHandler} style={styles.buttonContainer} ><PrimaryButton>Reset</PrimaryButton></View>
+            </View>
+            </Card>
         </View>
     )
 }
 
 const styles  = StyleSheet.create({
+    rootContainer:{flex:1, marginTop:100, alignItems: 'center'},
     input:{
         borderRadius:20,
         borderWidth:1,
         borderColor:'peru',
         padding:10,
     },
-    inputContainer:{
-        padding:16,
-        marginTop:100,
-        marginHorizontal:24,
-        backgroundColor:Colors.primary500,
-        borderRadius:20,
-        elevation:1,
-        shadowColor:Colors.primary600, 
-        shadowOffset:{width:0, height:1},
-        shadowRadius:6,
-        shadowOpacity:0.25,
-        marginTop:100,
-        justifyContent:'center', 
-        alignItems:'center'
-
-    }, 
     numberInput:{
         height:50,
         fontSize:32,
@@ -75,6 +66,11 @@ const styles  = StyleSheet.create({
         fontWeight:'bold',
         alignItems:'center'
 
+    },
+    instructions:{
+        color:Colors.accent500,
+        fontSize: 24,
+        elevation:3
     },
     buttonsContainer:{
         flexDirection:'row'
